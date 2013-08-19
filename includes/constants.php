@@ -6,7 +6,7 @@
  * 
  */
 $todefine = array(
-   "TAO_LTI_RESULT_SERVER_EXAMPLE" => "",
+   'TAO_LTI_RESULT_SERVER_EXAMPLE' => "http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#ltiBasicOutcomeExample",
    "TAO_RESULTSERVER_LTI_CONSUMER" => ""
 );
 ?>

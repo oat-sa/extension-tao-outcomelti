@@ -22,10 +22,10 @@
 require_once dirname(__FILE__) . '/../../tao/test/TaoTestRunner.php';
 
 //get the test into each extensions
-$tests = TaoTestRunner::getTests(array('taoResultServer'));
+$tests = TaoTestRunner::getTests(array('taoLtiBasicOutcome'));
 
 //create the test sutie
-$testSuite = new TestSuite('TAO Result Server Unit tests');
+$testSuite = new TestSuite('taoLtiBasicOutcome Unit tests');
 foreach($tests as $testCase){
 	$testSuite->addFile($testCase);
 }

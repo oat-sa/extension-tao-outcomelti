@@ -68,7 +68,7 @@ class LtiBasicOutcome_models_classes_LtiBasicOutcome
     /*
          * retrieve specific parameters from the resultserver to configure the storage
          */
-
+    /*sic*/
     public function configure($resultserver) {
         /**
          * Retrieve the lti consumer associated with the result server in the KB , those rpoperties are available within taoLtiBasicComponent only

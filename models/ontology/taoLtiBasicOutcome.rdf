@@ -28,10 +28,10 @@
   	<rdfs:label xml:lang="en-US"><![CDATA[Lti Basic]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[Lti Basic]]></rdfs:comment>
   </rdf:Description>
-   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#ltiExample">
-	<rdfs:label xml:lang="en-US"><![CDATA[LtiExample]]></rdfs:label>
-	<rdfs:comment xml:lang="en-US"><![CDATA[TAO Result Server 2.5 (using DB storage)]]></rdfs:comment>
-	<resultserver:hasResultServerModel rdf:resource="http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#ltiResultServerModel" />
+   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#ltiBasicOutcomeExample">
+	<rdfs:label xml:lang="en-US"><![CDATA[LTI Basic Outcome Example]]></rdfs:label>
+	<rdfs:comment xml:lang="en-US"><![CDATA[LTI Basic Outcome Example]]></rdfs:comment>
+	<resultserver:hasResultServerModel rdf:resource="http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#LtiResultServerModel" />
 	<rdf:type rdf:resource="http://www.tao.lu/Ontologies/LtiResultServer.rdf#LtiResultServer"/>
    </rdf:Description>
 

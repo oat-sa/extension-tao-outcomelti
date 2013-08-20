@@ -38,7 +38,7 @@ return array(
 		"DIR_HELPERS"			=> $extpath."helpers".DIRECTORY_SEPARATOR,
 	
 		# default module name
-		'DEFAULT_MODULE_NAME'	=> 'Result',
+		'DEFAULT_MODULE_NAME'	=> 'taoLtiBasicOutcome',
 	
 		#default action name
 		'DEFAULT_ACTION_NAME'	=> 'index',

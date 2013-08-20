@@ -5,8 +5,10 @@
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  * 
  */
+
 $todefine = array(
-   'TAO_LTI_RESULT_SERVER_EXAMPLE' => "http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#ltiBasicOutcomeExample",
-   "TAO_RESULTSERVER_LTI_CONSUMER" => ""
+  'TAO_LTI_BASIC_OUTCOME_RESULT_SERVER_EXAMPLE' => 'http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#ltiBasicOutcomeExample'
 );
+
+
 ?>

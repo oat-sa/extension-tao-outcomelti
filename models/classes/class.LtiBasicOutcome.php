@@ -1,22 +1,24 @@
 <?php
 
-require_once("/taoLtiBasicOutcome/includes/ims-blti/OAuthBody.php");
+require_once("taoLtiBasicOutcome/includes/ims-blti/OAuthBody.php");
 
 //The ResultStorage does not provide a good interface for the LTI submission case, may require some more abstract interface
 
 // LtiBasicOutcome relies on a speciifc property added to the result server that is the lti consumer which to send the results to (secret is retrieved)
 // LtiBasicOutcome relies on a custom option given by the service submitting results taht is the url
 
-class LtiBasicOutcome_models_classes_LtiBasicOutcome
+class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
     extends tao_models_classes_GenerisService
     implements taoResultServer_models_classes_ResultStorage {
 
+    private $ltiConsumer;//the kb resource modelling the LTI consumer
     /**
     * @param string deliveryResultIdentifier if no such deliveryResult with this identifier exists a new one gets created
     */
 
     public function __construct(){
 		parent::__construct();
+        common_ext_ExtensionsManager::getExtensionById("taoLtiBasicOutcome");
         //$this->consumer
        
     }
@@ -30,46 +32,20 @@ class LtiBasicOutcome_models_classes_LtiBasicOutcome
      */
 
     public function storeTestVariable($deliveryResultIdentifier, $test, taoResultServer_models_classes_Variable $testVariable, $callIdTest){
-
-                $body = '<?xml version = "1.0" encoding = "UTF-8"?>
-                <imsx_POXEnvelopeRequest xmlns = "http://www.imsglobal.org/lis/oms1p0/pox">
-                    <imsx_POXHeader>
-                        <imsx_POXRequestHeaderInfo>
-                            <imsx_version>V1.0</imsx_version>
-                            <imsx_messageIdentifier>MESSAGE</imsx_messageIdentifier>
-                        </imsx_POXRequestHeaderInfo>
-                    </imsx_POXHeader>
-                    <imsx_POXBody>
-                        <OPERATION>
-                            <resultRecord>
-                                <sourcedGUID>
-                                    <sourcedId>SOURCEDID</sourcedId>
-                                </sourcedGUID>
-                                <result>
-                                    <resultScore>
-                                        <language>en-us</language>
-                                        <textString>GRADE</textString>
-                                    </resultScore>
-                                </result>
-                            </resultRecord>
-                        </OPERATION>
-                    </imsx_POXBody>
-                </imsx_POXEnvelopeRequest>';
-                $operation = 'replaceResultRequest';
-                $postBody = str_replace(
-                array('SOURCEDID', 'GRADE', 'OPERATION','MESSAGE'),
-                array($deliveryResultIdentifier, "0.4", $operation, uniqid()),
-                $body);
-
-        $response = sendOAuthBodyPOST("POST", $this->serviceUrl, $this->consumerKey, $this->secret, "application/xml", $postBody);
-
+        //BAsic Lti Outcome restrict the submitted information to a few outcomevariables
+        if (get_class($testVariable)=="taoResultServer_models_classes_OutcomeVariable") {
+            $grade = $testVariable->getValue();
+            $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
+        }
+        //temp solution, need to move to joel's version for signing
+        $response = sendOAuthBodyPOST("POST", $this->serviceUrl, $this->consumerKey, $this->secret, "application/xml", $message);
     }
 
     /*
          * retrieve specific parameters from the resultserver to configure the storage
          */
     /*sic*/
-    public function configure($resultserver) {
+    public function configure(core_kernel_classes_Resource $resultserver, $callOptions = array()) {
         /**
          * Retrieve the lti consumer associated with the result server in the KB , those rpoperties are available within taoLtiBasicComponent only
          */
@@ -78,12 +54,17 @@ class LtiBasicOutcome_models_classes_LtiBasicOutcome
          * Retireve the required connection information 
          */
         $parameters = array(
-            "serviceUrl" => "http://localhost/",
+            "serviceUrl" => "http://localhost/calledbackservice",
             "secret" => "mySecret",
-            "consuùmerKey"=> "MyConsumerKEy"
+            "consumerKey"=> "MyConsumerKEy"
 
         );
-        $this->serviceUrl = $parameters["serviceUrl"];//problem it is given by the service
+        if (isset($callOptions["serviceUrl"])) {
+            $this->serviceUrl = $parameters["serviceUrl"];
+        } else {
+            throw new common_Exception("LtiBasicOutcome Storage requires a call parameter serviceUrl");
+        }
+        
         $this->secret = $parameters["secret"];
         $this->consumerKey = $parameters["consumerKey"];
     }

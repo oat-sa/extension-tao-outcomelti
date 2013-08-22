@@ -1,6 +1,6 @@
 <?php
 
-require_once("taoLtiBasicOutcome/includes/ims-blti/OAuthBody.php");
+//require_once("taoLtiBasicOutcome/includes/ims-blti/OAuthBody.php");
 
 //The ResultStorage does not provide a good interface for the LTI submission case, may require some more abstract interface
 
@@ -32,13 +32,14 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
      */
 
     public function storeTestVariable($deliveryResultIdentifier, $test, taoResultServer_models_classes_Variable $testVariable, $callIdTest){
-        //BAsic Lti Outcome restrict the submitted information to a few outcomevariables
+       
         if (get_class($testVariable)=="taoResultServer_models_classes_OutcomeVariable") {
             $grade = $testVariable->getValue();
             $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
         }
-        //temp solution, need to move to joel's version for signing
-        $response = sendOAuthBodyPOST("POST", $this->serviceUrl, $this->consumerKey, $this->secret, "application/xml", $message);
+        $credentialResource = taoLti_models_classes_LtiService::singleton()->getCredential($this->consumerKey);
+        $signedParameters = tao_models_classes_oauth_Service::singleton()->getSignedRequestParameters($consumerResource, $http_url,'POST', $params = array());
+        var_dump($signedParameters);
     }
 
     /*
@@ -49,26 +50,19 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
         /**
          * Retrieve the lti consumer associated with the result server in the KB , those rpoperties are available within taoLtiBasicComponent only
          */
-
-        /*
-         * Retireve the required connection information 
-         */
-        $parameters = array(
-            "serviceUrl" => "http://localhost/calledbackservice",
-            "secret" => "mySecret",
-            "consumerKey"=> "MyConsumerKEy"
-
-        );
-        if (isset($callOptions["serviceUrl"])) {
-            $this->serviceUrl = $parameters["serviceUrl"];
+       
+        if (isset($callOptions["service_url"])) {
+            $this->serviceUrl =  $callOptions["service_url"];
         } else {
             throw new common_Exception("LtiBasicOutcome Storage requires a call parameter serviceUrl");
         }
+        if (isset($callOptions["consumer_key"])) {
+            $this->consumerKey =  $callOptions["consumer_key"];
+        } else {
+            throw new common_Exception("LtiBasicOutcome Storage requires a call parameter consumerKey");
+        }
         
-        $this->secret = $parameters["secret"];
-        $this->consumerKey = $parameters["consumerKey"];
     }
-
      /**
      * In the case of An LtiBasic OutcomeSubmission, spawnResult is not supported
      */

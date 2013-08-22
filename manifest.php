@@ -13,7 +13,7 @@ return array(
 	'description' => 'Implements the LTI basic outcome engine for LTI Result Server',
 	'version' => '1.0',
 	'author' => 'Open Assessment Technologies',
-	'dependencies' => array('taoLtiResultServer'),
+	'dependencies' => array('taoResultServer', 'taoLti'),
 	'models' => array(
 		'http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#'
         ),

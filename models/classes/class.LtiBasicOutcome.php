@@ -49,6 +49,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
             $unSignedOutComeRequest->setBody($message);
             $signingService = new tao_models_classes_oauth_Service();
             $signedRequest = $signingService->sign($unSignedOutComeRequest, $credentials, true );
+            $signedRequest->setBody($message);
             $response = $signedRequest->send();
            var_dump($response);
             

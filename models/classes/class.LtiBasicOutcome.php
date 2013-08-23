@@ -34,12 +34,26 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
     public function storeTestVariable($deliveryResultIdentifier, $test, taoResultServer_models_classes_Variable $testVariable, $callIdTest){
        
         if (get_class($testVariable)=="taoResultServer_models_classes_OutcomeVariable") {
+            $variableIdentifier = $testVariable->getIdentifier();
+            //if in_array($variableIdentifier, array("numberCorrect", "numberSelected", "ratio"))
+            //
             $grade = $testVariable->getValue();
             $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
+
+            $credentialResource = taoLti_models_classes_LtiService::singleton()->getCredential($this->consumerKey);
+            
+            $credentials = new tao_models_classes_oauth_Credentials($credentialResource);
+
+            //Building POX raw http message
+            $unSignedOutComeRequest = new common_http_Request($this->serviceUrl, 'POST', array());
+            $unSignedOutComeRequest->setBody($message);
+            $signingService = new tao_models_classes_oauth_Service();
+            $signedRequest = $signingService->sign($unSignedOutComeRequest, $credentials, true );
+            $response = $signedRequest->send();
+           var_dump($response);
+            
         }
-        $credentialResource = taoLti_models_classes_LtiService::singleton()->getCredential($this->consumerKey);
-        $signedParameters = tao_models_classes_oauth_Service::singleton()->getSignedRequestParameters($consumerResource, $http_url,'POST', $params = array());
-        var_dump($signedParameters);
+       
     }
 
     /*
@@ -54,13 +68,16 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
         if (isset($callOptions["service_url"])) {
             $this->serviceUrl =  $callOptions["service_url"];
         } else {
-            throw new common_Exception("LtiBasicOutcome Storage requires a call parameter serviceUrl");
+
+            throw new common_Exception("LtiBasicOutcome Storage requires a call parameter service_url");
         }
         if (isset($callOptions["consumer_key"])) {
             $this->consumerKey =  $callOptions["consumer_key"];
         } else {
             throw new common_Exception("LtiBasicOutcome Storage requires a call parameter consumerKey");
         }
+
+        common_Logger::i("ResultServer configured with  ".$callOptions["service_url"]. "and ".$callOptions["consumer_key"]);
         
     }
      /**

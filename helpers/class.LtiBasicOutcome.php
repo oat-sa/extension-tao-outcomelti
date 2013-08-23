@@ -22,38 +22,34 @@
 class taoLtiBasicOutcome_helpers_LtiBasicOutcome
 {
     public static function buildXMLMessage($sourcedId, $grade, $operation){
-
+            $language = 'en-us';
+            $operation = 'replaceResultRequest';
            $body = '<?xml version = "1.0" encoding = "UTF-8"?>
                 <imsx_POXEnvelopeRequest xmlns = "http://www.imsglobal.org/lis/oms1p0/pox">
                     <imsx_POXHeader>
                         <imsx_POXRequestHeaderInfo>
                             <imsx_version>V1.0</imsx_version>
-                            <imsx_messageIdentifier>MESSAGE</imsx_messageIdentifier>
+                            <imsx_messageIdentifier>'.uniqid().'</imsx_messageIdentifier>
                         </imsx_POXRequestHeaderInfo>
                     </imsx_POXHeader>
                     <imsx_POXBody>
-                        <OPERATION>
+                        <'.$operation.'>
                             <resultRecord>
                                 <sourcedGUID>
-                                    <sourcedId>SOURCEDID</sourcedId>
+                                    <sourcedId>'.$sourcedId.'</sourcedId>
                                 </sourcedGUID>
                                 <result>
                                     <resultScore>
-                                        <language>en-us</language>
-                                        <textString>GRADE</textString>
+                                        <language>'.$language.'</language>
+                                        <textString>'.$grade.'</textString>
                                     </resultScore>
                                 </result>
                             </resultRecord>
-                        </OPERATION>
+                        </'.$operation.'>
                     </imsx_POXBody>
                 </imsx_POXEnvelopeRequest>';
-                $operation = 'replaceResultRequest';
-                $postBody = str_replace(
-                array('SOURCEDID', 'GRADE', 'OPERATION','MESSAGE'),
-                array($sourcedId, $grade, $operation, uniqid()),
-                $body);
 
-                return $postBody;
+                return $body;
 
     }
    

@@ -2,7 +2,7 @@
 <rdf:RDF 
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-	xml:base="http://www.tao.lu/Ontologies/TAODelivery.rdf#" 
+	xml:base="http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#"
 	xmlns:resultserver="http://www.tao.lu/Ontologies/TAOResultServer.rdf#"
 	xmlns:basicoutcome="http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#"
 	xmlns:widget="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#" 

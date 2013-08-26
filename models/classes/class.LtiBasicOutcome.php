@@ -18,7 +18,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
 
     public function __construct(){
 		parent::__construct();
-        common_ext_ExtensionsManager::getExtensionById("taoLtiBasicOutcome");
+        common_ext_ExtensionsManager::singleton()->getExtensionById("taoLtiBasicOutcome");
         //$this->consumer
        
     }
@@ -34,14 +34,20 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
     public function storeTestVariable($deliveryResultIdentifier, $test, taoResultServer_models_classes_Variable $testVariable, $callIdTest){
        
         if (get_class($testVariable)=="taoResultServer_models_classes_OutcomeVariable") {
+            common_Logger::i("*************Starting Outcome submission ********");
+            common_Logger::i("Outcome test Variable Submission: ".$testVariable->getIdentifier() );
+            common_Logger::i("Result Identifier: ".$deliveryResultIdentifier );
+            common_Logger::i("Service URL: ".$this->serviceUrl );
             $variableIdentifier = $testVariable->getIdentifier();
             //if in_array($variableIdentifier, array("numberCorrect", "numberSelected", "ratio"))
             //
             $grade = $testVariable->getValue();
             $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
 
+            common_Logger::i("Preparing POX message for the outcome service :".$message."\n");
+
             $credentialResource = taoLti_models_classes_LtiService::singleton()->getCredential($this->consumerKey);
-            
+            common_Logger::i("Credential for the consumerKey :". $credentialResource->getUri()."\n");
             $credentials = new tao_models_classes_oauth_Credentials($credentialResource);
 
             //Building POX raw http message
@@ -50,8 +56,11 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
             $signingService = new tao_models_classes_oauth_Service();
             $signedRequest = $signingService->sign($unSignedOutComeRequest, $credentials, true );
             $signedRequest->setBody($message);
+            common_Logger::i("Signed Request :\n\n". serialize($signedRequest)."\n\n");
             $response = $signedRequest->send();
-           var_dump($response);
+            common_Logger::i("Response received from the outcome service \n\n".serialize($response)."\n" );
+            common_Logger::i("*************Ending Outcome submission ********");
+            //var_dump($response);
             
         }
        
@@ -96,6 +105,9 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
     }
 
     public function storeItemVariable($deliveryResultIdentifier, $test, $item, taoResultServer_models_classes_Variable $itemVariable, $callIdItem){
+            //for testing purpose
+            common_Logger::i("Item Variable Submission: ".$itemVariable->getIdentifier() );
+            $this->storeTestVariable($deliveryResultIdentifier, $test, $itemVariable, $callIdItem);
 
     }
 

@@ -44,19 +44,22 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
             $grade = $testVariable->getValue();
             $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
 
-            common_Logger::i("Preparing POX message for the outcome service :".$message."\n");
+            //common_Logger::i("Preparing POX message for the outcome service :".$message."\n");
 
             $credentialResource = taoLti_models_classes_LtiService::singleton()->getCredential($this->consumerKey);
-            common_Logger::i("Credential for the consumerKey :". $credentialResource->getUri()."\n");
+            //common_Logger::i("Credential for the consumerKey :". $credentialResource->getUri()."\n");
             $credentials = new tao_models_classes_oauth_Credentials($credentialResource);
-
+            //$this->serviceUrl = "http://tao-dev/log.php";
             //Building POX raw http message
             $unSignedOutComeRequest = new common_http_Request($this->serviceUrl, 'POST', array());
             $unSignedOutComeRequest->setBody($message);
+            //seems ignored by moodle for the base string computation 
+            //$unSignedOutComeRequest->setHeader("Content-Type", "application/xml");
             $signingService = new tao_models_classes_oauth_Service();
             $signedRequest = $signingService->sign($unSignedOutComeRequest, $credentials, true );
-            $signedRequest->setBody($message);
-            common_Logger::i("Signed Request :\n\n". serialize($signedRequest)."\n\n");
+            
+           // $signedRequest->setBody($message);
+            //common_Logger::i("Signed Request :\n\n". serialize($signedRequest)."\n\n");
             $response = $signedRequest->send();
             common_Logger::i("Response received from the outcome service \n\n".serialize($response)."\n" );
             common_Logger::i("*************Ending Outcome submission ********");

@@ -34,10 +34,12 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
     public function storeTestVariable($deliveryResultIdentifier, $test, taoResultServer_models_classes_Variable $testVariable, $callIdTest){
        
         if (get_class($testVariable)=="taoResultServer_models_classes_OutcomeVariable") {
-            common_Logger::i("*************Starting Outcome submission ********");
-            common_Logger::i("Outcome test Variable Submission: ".$testVariable->getIdentifier() );
-            common_Logger::i("Result Identifier: ".$deliveryResultIdentifier );
-            common_Logger::i("Service URL: ".$this->serviceUrl );
+            common_Logger::i(
+                "Outcome submission VariableId. (".$testVariable->getIdentifier().")"
+                . "Result Identifier (".$deliveryResultIdentifier.")"
+                . "Service URL (".$this->serviceUrl.")"
+                );
+            
             $variableIdentifier = $testVariable->getIdentifier();
             //if in_array($variableIdentifier, array("numberCorrect", "numberSelected", "ratio"))
             //
@@ -53,16 +55,22 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
             //Building POX raw http message
             $unSignedOutComeRequest = new common_http_Request($this->serviceUrl, 'POST', array());
             $unSignedOutComeRequest->setBody($message);
-            //seems ignored by moodle for the base string computation 
-            //$unSignedOutComeRequest->setHeader("Content-Type", "application/xml");
+           
             $signingService = new tao_models_classes_oauth_Service();
             $signedRequest = $signingService->sign($unSignedOutComeRequest, $credentials, true );
             
+             //Hack for moodle comaptibility, the header is ignored for the signature computation
+            $signedRequest->setHeader("Content-Type", "application/xml");
+
            // $signedRequest->setBody($message);
             //common_Logger::i("Signed Request :\n\n". serialize($signedRequest)."\n\n");
             $response = $signedRequest->send();
-            common_Logger::i("Response received from the outcome service \n\n".serialize($response)."\n" );
-            common_Logger::i("*************Ending Outcome submission ********");
+            common_Logger::i("Response received from the outcome service with http code ".serialize($response)."" );
+            if ($response->httpCode != "200") {
+                common_Logger::f("An HTTP level proble occured when sending the outcome to the service url" );
+                throw new common_Exception("An HTTP level proble occured when sending the outcome to the service url");
+            }
+            
             //var_dump($response);
             
         }

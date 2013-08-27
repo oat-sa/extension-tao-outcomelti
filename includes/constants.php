@@ -7,8 +7,9 @@
  */
 
 $todefine = array(
-  'TAO_LTI_BASIC_OUTCOME_RESULT_SERVER_EXAMPLE' => 'http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#ltiBasicOutcomeExample'
-);
+    'TAO_LTI_BASIC_OUTCOME_RESULT_SERVER_EXAMPLE' => 'http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#ltiBasicOutcomeExample',
+    'TAO_LTI_BASIC_OUTCOME_MODEL'=>'http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#LtiResultServerModel'
+    );
 
 
 ?>

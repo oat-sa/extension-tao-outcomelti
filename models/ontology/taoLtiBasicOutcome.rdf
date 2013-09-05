@@ -25,6 +25,6 @@
 	<rdfs:label xml:lang="en-US"><![CDATA[LTI Basic Outcome Result]]></rdfs:label>
 	<rdfs:comment xml:lang="en-US"><![CDATA[LTI Basic Outcome Server]]></rdfs:comment>
 	<resultserver:hasResultServerModel rdf:resource="http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#LtiResultServerModel" />
-	<rdf:type rdf:resource="http://www.tao.lu/Ontologies/LtiResultServer.rdf#ResultServer"/>
+	<rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAOResultServer.rdf#ResultServer"/>
   </rdf:Description>
 </rdf:RDF>

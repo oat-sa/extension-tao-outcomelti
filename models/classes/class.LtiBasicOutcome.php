@@ -55,8 +55,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
             $response = $signedRequest->send();
             common_Logger::i("Response received from the outcome service with http code ".serialize($response)."" );
             if ($response->httpCode != "200") {
-                common_Logger::f("An HTTP level proble occured when sending the outcome to the service url" );
-                throw new common_Exception("An HTTP level proble occured when sending the outcome to the service url");
+                throw new common_exception_Error("An HTTP level proble occured when sending the outcome to the service url");
             }
             
         }
@@ -83,7 +82,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
             throw new common_Exception("LtiBasicOutcome Storage requires a call parameter consumerKey");
         }
 
-        common_Logger::i("ResultServer configured with  ".$callOptions["service_url"]. "and ".$callOptions["consumer_key"]);
+        common_Logger::i("ResultServer configured with ".$callOptions["service_url"]. " and ".$callOptions["consumer_key"]);
         
     }
      /**

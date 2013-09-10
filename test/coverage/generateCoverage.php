@@ -32,7 +32,7 @@ foreach($tests as $testCase){
 
 //add the reporter regarding the context
 if(PHP_SAPI == 'cli'){
-	$reporter = new XmlTimeReporter();
+	$reporter = new TextReporter();
 }
 else{
 	$reporter = new HtmlReporter();
@@ -41,15 +41,15 @@ else{
 require_once  PHPCOVERAGE_HOME. "/CoverageRecorder.php";
 require_once PHPCOVERAGE_HOME . "/reporter/HtmlCoverageReporter.php";
 //run the unit test suite
-$includePaths = array(ROOT_PATH.'taoGroups/models',ROOT_PATH.'taoResultServer/helpers');
+$includePaths = array(ROOT_PATH.'taoLtiBasicOutcome/models',ROOT_PATH.'taoLtiBasicOutcome/helpers');
 $excludePaths = array();
-$covReporter = new HtmlCoverageReporter("Code Coverage Report taoGroups", "", PHPCOVERAGE_REPORTS."/taoGroups");
+$covReporter = new HtmlCoverageReporter("Code Coverage Report taoLtiBasicOutcome", "", PHPCOVERAGE_REPORTS."/taoLtiBasicOutcome");
 $cov = new CoverageRecorder($includePaths, $excludePaths, $covReporter);
 //run the unit test suite
 $cov->startInstrumentation();
 $testSuite->run($reporter);
 $cov->stopInstrumentation();
 $cov->generateReport();
-$covReporter->printTextSummary(PHPCOVERAGE_REPORTS.'/taoResultServer_coverage.txt');
+$covReporter->printTextSummary(PHPCOVERAGE_REPORTS.'/taoLtiBasicOutcome_coverage.txt');
 
 ?>

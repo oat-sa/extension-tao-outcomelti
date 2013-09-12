@@ -22,9 +22,6 @@
 class taoLtiBasicOutcome_helpers_LtiBasicOutcome
 {
 
-
-
-
     public static function buildXMLMessage($sourcedId, $grade, $operation){
             $language = 'en-us';
             $operation = 'replaceResultRequest';

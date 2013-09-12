@@ -12,7 +12,7 @@ $todefine = array(
 
 
 
-    'LTI OUTCOME VARIABLE IDENTIFIER' => 'LtiOutcome'
+    'LTI_OUTCOME_VARIABLE_IDENTIFIER' => 'LtiOutcome'
 
 
     );

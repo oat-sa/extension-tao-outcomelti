@@ -32,7 +32,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
                 . "Service URL (".$this->serviceUrl.")"
                 );
             $variableIdentifier = $testVariable->getIdentifier();
-            if ($variableIdentifier == LTI OUTCOME VARIABLE IDENTIFIER) {
+            if ($variableIdentifier == LTI_OUTCOME_VARIABLE_IDENTIFIER) {
                 $grade = $testVariable->getValue();
                 $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
 

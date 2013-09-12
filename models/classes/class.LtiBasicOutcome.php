@@ -32,32 +32,35 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
                 . "Service URL (".$this->serviceUrl.")"
                 );
             $variableIdentifier = $testVariable->getIdentifier();
-            //if in_array($variableIdentifier, array("numberCorrect", "numberSelected", "ratio"))
-            //
-            $grade = $testVariable->getValue();
-            $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
+            if ($variableIdentifier == LTI OUTCOME VARIABLE IDENTIFIER) {
+                $grade = $testVariable->getValue();
+                $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
 
-            //common_Logger::i("Preparing POX message for the outcome service :".$message."\n");
+                //common_Logger::i("Preparing POX message for the outcome service :".$message."\n");
 
-            $credentialResource = taoLti_models_classes_LtiService::singleton()->getCredential($this->consumerKey);
-            //common_Logger::i("Credential for the consumerKey :". $credentialResource->getUri()."\n");
-            $credentials = new tao_models_classes_oauth_Credentials($credentialResource);
-            //$this->serviceUrl = "http://tao-dev/log.php";
-            //Building POX raw http message
-            $unSignedOutComeRequest = new common_http_Request($this->serviceUrl, 'POST', array());
-            $unSignedOutComeRequest->setBody($message);
-            $signingService = new tao_models_classes_oauth_Service();
-            $signedRequest = $signingService->sign($unSignedOutComeRequest, $credentials, true );
-            
-             //Hack for moodle comaptibility, the header is ignored for the signature computation
-            $signedRequest->setHeader("Content-Type", "application/xml");
+                $credentialResource = taoLti_models_classes_LtiService::singleton()->getCredential($this->consumerKey);
+                //common_Logger::i("Credential for the consumerKey :". $credentialResource->getUri()."\n");
+                $credentials = new tao_models_classes_oauth_Credentials($credentialResource);
+                //$this->serviceUrl = "http://tao-dev/log.php";
+                //Building POX raw http message
+                $unSignedOutComeRequest = new common_http_Request($this->serviceUrl, 'POST', array());
+                $unSignedOutComeRequest->setBody($message);
+                $signingService = new tao_models_classes_oauth_Service();
+                $signedRequest = $signingService->sign($unSignedOutComeRequest, $credentials, true );
+                common_Logger::i("Request sent (Body)\n".($signedRequest->getBody())."\n");
+                common_Logger::i("Request sent (Headers)\n".(serialize($signedRequest->getHeaders()))."\n");
+                common_Logger::i("Request sent (Headers)\n".(serialize($signedRequest->getParams()))."\n");
+                 //Hack for moodle comaptibility, the header is ignored for the signature computation
+                $signedRequest->setHeader("Content-Type", "application/xml");
 
-            $response = $signedRequest->send();
-            common_Logger::i("Response received from the outcome service with http code ".serialize($response)."" );
-            if ($response->httpCode != "200") {
-                throw new common_exception_Error("An HTTP level proble occured when sending the outcome to the service url");
+                $response = $signedRequest->send();
+                common_Logger::i("\nHTTP Code received: ".($response->httpCode)."\n" );
+                common_Logger::i("\nHTTP From: ".($response->effectiveUrl)."\n" );
+                common_Logger::i("\nHTTP Content received: ".($response->responseData)."\n" );
+                if ($response->httpCode != "200") {
+                    throw new common_exception_Error("An HTTP level proble occured when sending the outcome to the service url");
+                }
             }
-            
         }
        
     }

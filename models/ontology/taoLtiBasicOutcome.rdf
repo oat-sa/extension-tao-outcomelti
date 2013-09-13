@@ -9,6 +9,7 @@
 	xmlns:generis="http://www.tao.lu/Ontologies/generis.rdf#"
 	xmlns:tao="http://www.tao.lu/Ontologies/TAO.rdf#"
 >
+    <!--
    <rdf:Description rdf:about="http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#LtiResultServerModel">
 	<rdfs:label xml:lang="en-US"><![CDATA[Lti Basic Outcome POX/Oauth]]></rdfs:label>
 	<rdfs:comment xml:lang="en-US"><![CDATA[Lti Basic Outcome POX/Oauth]]></rdfs:comment>
@@ -27,4 +28,5 @@
 	<resultserver:hasResultServerModel rdf:resource="http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#LtiResultServerModel" />
 	<rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAOResultServer.rdf#ResultServer"/>
   </rdf:Description>
+  -->
 </rdf:RDF>

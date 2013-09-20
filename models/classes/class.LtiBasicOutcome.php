@@ -1,4 +1,22 @@
 <?php
+/**
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *
+ */
 
 /**
  * Implements tao results storage with respect to LTI 1.1.1 specs acting as a Tool provider calling back the consumer outcome service
@@ -27,9 +45,8 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
        
         if (get_class($testVariable)=="taoResultServer_models_classes_OutcomeVariable") {
             common_Logger::i(
-                "Outcome submission VariableId. (".$testVariable->getIdentifier().")"
-                . "Result Identifier (".$deliveryResultIdentifier.")"
-                . "Service URL (".$this->serviceUrl.")"
+                "Outcome submission VariableId. (".$testVariable->getIdentifier().") Result Identifier ("
+                .$deliveryResultIdentifier.")Service URL (".$this->serviceUrl.")"
                 );
             $variableIdentifier = $testVariable->getIdentifier();
             if (($variableIdentifier == LTI_OUTCOME_VARIABLE_IDENTIFIER)

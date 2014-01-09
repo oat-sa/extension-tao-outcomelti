@@ -25,7 +25,7 @@
 
 class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
     extends tao_models_classes_GenerisService
-    implements taoResultServer_models_classes_ResultStorage {
+    implements taoResultServer_models_classes_WritableResultStorage {
 
     //private $ltiConsumer;//the kb resource modelling the LTI consumer
     /**

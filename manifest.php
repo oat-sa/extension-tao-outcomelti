@@ -10,11 +10,15 @@ $taopath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'tao'.DIRECTORY_SEPARA
 	
 return array(
 	'name' => 'taoLtiBasicOutcome',
+    'label' => 'Result storage for LTI',
 	'description' => 'Implements the LTI basic outcome engine for LTI Result Server',
     'license' => 'GPL-2.0',
     'version' => '1.0',
 	'author' => 'Open Assessment Technologies',
-	'dependencies' => array('taoResultServer', 'taoLti'),
+	'requires' => array(
+        'taoResultServer' => '2.6',
+        'taoLti' => '*'
+	),
 	'models' => array(
 		'http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#'
         ),

@@ -13,7 +13,7 @@ return array(
     'label' => 'Result storage for LTI',
 	'description' => 'Implements the LTI basic outcome engine for LTI Result Server',
     'license' => 'GPL-2.0',
-    'version' => '2.6',
+    'version' => '2.6.1',
 	'author' => 'Open Assessment Technologies',
 	'requires' => array(
         'taoResultServer' => '2.6',
@@ -25,6 +25,7 @@ return array(
 	'install' => array('rdf' => array(
 			dirname(__FILE__). '/models/ontology/taoLtiBasicOutcome.rdf'
 		)),
+	'update' => 'taoLtiBasicOutcome_scripts_update_Updater',
  	'constants' => array(
 	 	# actions directory
 		"DIR_ACTIONS"			=> $extpath."actions".DIRECTORY_SEPARATOR,

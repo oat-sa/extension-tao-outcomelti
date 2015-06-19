@@ -16,7 +16,7 @@ return array(
     'version' => '2.6.1',
 	'author' => 'Open Assessment Technologies',
 	'requires' => array(
-        'taoResultServer' => '2.6',
+        'taoResultServer' => '>=2.6',
         'taoLti' => '*'
 	),
 	'models' => array(

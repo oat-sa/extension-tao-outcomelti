@@ -32,11 +32,7 @@ class taoLtiBasicOutcome_scripts_update_Updater extends \common_ext_ExtensionUpd
      */
     public function update($initialVersion) {
         
-        $currentVersion = $initialVersion;
-        
-        if ($currentVersion == '2.6') {
-        	$currentVersion = '2.6.1';
-        }
-        return $currentVersion;
+        $this->skip('2.6','2.6.2');
+        return null;
     }
 }

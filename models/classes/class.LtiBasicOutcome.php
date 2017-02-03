@@ -125,5 +125,8 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
             $this->storeTestVariable($deliveryResultIdentifier, $test, $itemVariable, $callIdItem);
     }
 
+    public function storeRelatedDeliveryExecution($deliveryResultIdentifier, $executionIdentifier)
+    {
+    }
 }
 ?>

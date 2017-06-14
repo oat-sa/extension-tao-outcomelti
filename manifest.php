@@ -13,10 +13,10 @@ return array(
     'label' => 'Result storage for LTI',
 	'description' => 'Implements the LTI basic outcome engine for LTI Result Server',
     'license' => 'GPL-2.0',
-    'version' => '2.7.0',
+    'version' => '4.0.0',
 	'author' => 'Open Assessment Technologies',
 	'requires' => array(
-        'taoResultServer' => '>=3.0',
+        'taoResultServer' => '>=4.0',
         'taoLti' => '*'
 	),
 	'models' => array(
@@ -44,11 +44,5 @@ return array(
 	
 		#BASE URL (usually the domain root)
 		'BASE_URL'				=> ROOT_URL . '/taoLtiBasicOutcome',
-	
-		#BASE WWW the web resources path
-		'BASE_WWW'				=> ROOT_URL . '/taoLtiBasicOutcome/views/',
-	 
-	  	#TAO extension Paths
-		'TAOBASE_WWW'			=> ROOT_URL  . '/tao/views/',
 	)
 );

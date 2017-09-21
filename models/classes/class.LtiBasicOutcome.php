@@ -18,6 +18,8 @@
  *
  */
 
+use oat\taoResultServer\models\classes\ResultAliasServiceInterface;
+
 /**
  * Implements tao results storage with respect to LTI 1.1.1 specs acting as a Tool provider calling back the consumer outcome service
  *
@@ -53,6 +55,11 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
                // or true
                 ) {
                 $grade = (string)$testVariable->getValue();
+
+                /** @var ResultAliasServiceInterface $resultAliasService */
+                $resultAliasService = $this->getServiceLocator()->get(ResultAliasServiceInterface::SERVICE_ID);
+                $deliveryResultIdentifier = current($resultAliasService->getResultAlias($deliveryResultIdentifier));
+
                 $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
 
                 //common_Logger::i("Preparing POX message for the outcome service :".$message."\n");

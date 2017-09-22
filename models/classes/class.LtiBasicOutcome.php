@@ -58,9 +58,8 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
 
                 /** @var ResultAliasServiceInterface $resultAliasService */
                 $resultAliasService = $this->getServiceLocator()->get(ResultAliasServiceInterface::SERVICE_ID);
-                $deliveryResultAlias = current($resultAliasService->getResultAlias($deliveryResultIdentifier));
-
-                $deliveryResultIdentifier = empty($deliveryResultAlias) ? $deliveryResultIdentifier: $deliveryResultAlias;
+                $deliveryResultAlias = $resultAliasService->getResultAlias($deliveryResultIdentifier);
+                $deliveryResultIdentifier = empty($deliveryResultAlias) ? $deliveryResultIdentifier: current($deliveryResultAlias);
 
                 $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
 

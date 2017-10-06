@@ -93,6 +93,13 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
        
     }
     
+    public function storeTestVariables($deliveryResultIdentifier, $test, array $testVariables, $callIdTest)
+    {
+        foreach ($testVariables as $testVariable) {
+            $this->storeTestVariable($deliveryResultIdentifier, $test, $testVariable, $callIdTest);
+        }
+    }
+    
     /*
     * retrieve specific parameters from the resultserver to configure the storage
     */

@@ -137,8 +137,9 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
 
     public function storeItemVariable($deliveryResultIdentifier, $test, $item, taoResultServer_models_classes_Variable $itemVariable, $callIdItem)
     {
-            common_Logger::d("Item Variable Submission: ".$itemVariable->getIdentifier() );
-            $this->storeTestVariable($deliveryResultIdentifier, $test, $itemVariable, $callIdItem);
+        // For testing purpose.            
+        common_Logger::d("Item Variable Submission: ".$itemVariable->getIdentifier() );
+        $this->storeTestVariable($deliveryResultIdentifier, $test, $itemVariable, $callIdItem);
     }
 
     public function storeItemVariables($deliveryResultIdentifier, $test, $item, array $itemVariables, $callIdItem)

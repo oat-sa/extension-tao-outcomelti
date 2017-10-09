@@ -27,7 +27,8 @@ use oat\taoResultServer\models\classes\ResultAliasServiceInterface;
 
 class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
     extends tao_models_classes_GenerisService
-    implements taoResultServer_models_classes_WritableResultStorage {
+    implements taoResultServer_models_classes_WritableResultStorage
+    {
 
     //private $ltiConsumer;//the kb resource modelling the LTI consumer
     /**
@@ -43,8 +44,8 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
      * @param taoResultServer_models_classes_Variable $testVariable
      * @param type $callIdTest ignored
      */
-    public function storeTestVariable($deliveryResultIdentifier, $test, taoResultServer_models_classes_Variable $testVariable, $callIdTest){
-       
+    public function storeTestVariable($deliveryResultIdentifier, $test, taoResultServer_models_classes_Variable $testVariable, $callIdTest)
+    {
         if (get_class($testVariable)=="taoResultServer_models_classes_OutcomeVariable") {
             common_Logger::i(
                 "Outcome submission VariableId. (".$testVariable->getIdentifier().") Result Identifier ("
@@ -91,11 +92,20 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
         }
        
     }
+    
+    public function storeTestVariables($deliveryResultIdentifier, $test, array $testVariables, $callIdTest)
+    {
+        foreach ($testVariables as $testVariable) {
+            $this->storeTestVariable($deliveryResultIdentifier, $test, $testVariable, $callIdTest);
+        }
+    }
+    
     /*
     * retrieve specific parameters from the resultserver to configure the storage
     */
     /*sic*/
-    public function configure(core_kernel_classes_Resource $resultserver, $callOptions = array()) {
+    public function configure(core_kernel_classes_Resource $resultserver, $callOptions = array())
+    {
         /**
          * Retrieve the lti consumer associated with the result server in the KB , those rpoperties are available within taoLtiBasicComponent only
          */
@@ -118,20 +128,32 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
      /**
      * In the case of An LtiBasic OutcomeSubmission, spawnResult has no effect
      */
-    public function spawnResult(){
-       //
+    public function spawnResult()
+    {
+       
     }
-    public function storeRelatedTestTaker($deliveryResultIdentifier, $testTakerIdentifier) {
-    }
-
-    public function storeRelatedDelivery($deliveryResultIdentifier, $deliveryIdentifier) {
-    }
-
-    public function storeItemVariable($deliveryResultIdentifier, $test, $item, taoResultServer_models_classes_Variable $itemVariable, $callIdItem){
-            //for testing purpose
-            common_Logger::i("Item Variable Submission: ".$itemVariable->getIdentifier() );
-            $this->storeTestVariable($deliveryResultIdentifier, $test, $itemVariable, $callIdItem);
+    public function storeRelatedTestTaker($deliveryResultIdentifier, $testTakerIdentifier)
+    {
+        
     }
 
+    public function storeRelatedDelivery($deliveryResultIdentifier, $deliveryIdentifier)
+    {
+        
+    }
+
+    public function storeItemVariable($deliveryResultIdentifier, $test, $item, taoResultServer_models_classes_Variable $itemVariable, $callIdItem)
+    {
+        // For testing purpose.            
+        common_Logger::d("Item Variable Submission: ".$itemVariable->getIdentifier() );
+        $this->storeTestVariable($deliveryResultIdentifier, $test, $itemVariable, $callIdItem);
+    }
+
+    public function storeItemVariables($deliveryResultIdentifier, $test, $item, array $itemVariables, $callIdItem)
+    {
+        foreach ($itemVariables as $itemVariable) {
+            $this->storeItemVariable($deliveryResultIdentifier, $test, $item, $itemVariable, $callIdItem);
+        }
+    }
 }
 ?>

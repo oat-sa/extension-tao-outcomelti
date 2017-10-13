@@ -30,6 +30,8 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
     implements taoResultServer_models_classes_WritableResultStorage
     {
 
+    const VARIABLE_IDENTIFIER = 'LtiOutcome';
+
     //private $ltiConsumer;//the kb resource modelling the LTI consumer
     /**
     * @param string deliveryResultIdentifier if no such deliveryResult with this identifier exists a new one gets created
@@ -52,7 +54,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
                 .$deliveryResultIdentifier.")Service URL (".$this->serviceUrl.")"
                 );
             $variableIdentifier = $testVariable->getIdentifier();
-            if (($variableIdentifier == LTI_OUTCOME_VARIABLE_IDENTIFIER)
+            if (($variableIdentifier == self::VARIABLE_IDENTIFIER)
                // or true
                 ) {
                 $grade = (string)$testVariable->getValue();

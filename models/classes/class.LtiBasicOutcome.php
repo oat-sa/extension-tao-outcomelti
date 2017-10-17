@@ -49,7 +49,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
     public function storeTestVariable($deliveryResultIdentifier, $test, taoResultServer_models_classes_Variable $testVariable, $callIdTest)
     {
         if (get_class($testVariable)=="taoResultServer_models_classes_OutcomeVariable") {
-            common_Logger::i(
+            common_Logger::d(
                 "Outcome submission VariableId. (".$testVariable->getIdentifier().") Result Identifier ("
                 .$deliveryResultIdentifier.")Service URL (".$this->serviceUrl.")"
                 );
@@ -77,16 +77,16 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
                 $unSignedOutComeRequest->setBody($message);
                 $signingService = new tao_models_classes_oauth_Service();
                 $signedRequest = $signingService->sign($unSignedOutComeRequest, $credentials, true );
-                common_Logger::i("Request sent (Body)\n".($signedRequest->getBody())."\n");
-                common_Logger::i("Request sent (Headers)\n".(serialize($signedRequest->getHeaders()))."\n");
-                common_Logger::i("Request sent (Headers)\n".(serialize($signedRequest->getParams()))."\n");
+                common_Logger::d("Request sent (Body)\n".($signedRequest->getBody())."\n");
+                common_Logger::d("Request sent (Headers)\n".(serialize($signedRequest->getHeaders()))."\n");
+                common_Logger::d("Request sent (Headers)\n".(serialize($signedRequest->getParams()))."\n");
                  //Hack for moodle comaptibility, the header is ignored for the signature computation
                 $signedRequest->setHeader("Content-Type", "application/xml");
 
                 $response = $signedRequest->send();
-                common_Logger::i("\nHTTP Code received: ".($response->httpCode)."\n" );
-                common_Logger::i("\nHTTP From: ".($response->effectiveUrl)."\n" );
-                common_Logger::i("\nHTTP Content received: ".($response->responseData)."\n" );
+                common_Logger::d("\nHTTP Code received: ".($response->httpCode)."\n" );
+                common_Logger::d("\nHTTP From: ".($response->effectiveUrl)."\n" );
+                common_Logger::d("\nHTTP Content received: ".($response->responseData)."\n" );
                 if ($response->httpCode != "200") {
                     throw new common_exception_Error("An HTTP level proble occured when sending the outcome to the service url");
                 }
@@ -124,7 +124,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
             throw new common_Exception("LtiBasicOutcome Storage requires a call parameter consumerKey");
         }
 
-        common_Logger::i("ResultServer configured with ".$callOptions["service_url"]. " and ".$callOptions["consumer_key"]);
+        common_Logger::d("ResultServer configured with ".$callOptions["service_url"]. " and ".$callOptions["consumer_key"]);
         
     }
      /**

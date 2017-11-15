@@ -106,7 +106,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
     * retrieve specific parameters from the resultserver to configure the storage
     */
     /*sic*/
-    public function configure(core_kernel_classes_Resource $resultserver, $callOptions = array())
+    public function configure($callOptions = array())
     {
         /**
          * Retrieve the lti consumer associated with the result server in the KB , those rpoperties are available within taoLtiBasicComponent only

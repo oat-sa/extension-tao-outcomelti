@@ -13,10 +13,10 @@ return array(
   'label' => 'Result storage for LTI',
 	'description' => 'Implements the LTI basic outcome engine for LTI Result Server',
   'license' => 'GPL-2.0',
-  'version' => '3.1.2',
+  'version' => '3.1.3',
 	'author' => 'Open Assessment Technologies',
 	'requires' => array(
-        'taoResultServer' => '>=2.6',
+        'taoResultServer' => '>=4.2.0',
         'taoLti' => '*'
 	),
 	'models' => array(

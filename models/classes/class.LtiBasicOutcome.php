@@ -32,7 +32,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
         $launchData = taoLti_models_classes_LtiService::singleton()->getLtiSession()->getLaunchData();
 
         $result = $taskQueue->createTask(
-            new oat\taoLtiBasicOutcome\models\tasks\SendLtioucameTask(),
+            new oat\taoLtiBasicOutcome\models\tasks\SendLtiOutcomeTask(),
             array_merge($params, ['launchData' => $launchData]),
             'Send LTI results');
     }

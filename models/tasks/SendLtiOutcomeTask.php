@@ -26,7 +26,7 @@ use oat\oatbox\extension\AbstractAction;
 use oat\oatbox\log\LoggerAwareTrait;
 use oat\taoResultServer\models\classes\ResultAliasServiceInterface;
 
-class SendLtioucameTask extends AbstractAction
+class SendLtiOutcomeTask extends AbstractAction
 {
 
     use LoggerAwareTrait;
@@ -52,7 +52,7 @@ class SendLtioucameTask extends AbstractAction
             if (self::VARIABLE_IDENTIFIER === $variableIdentifier) {
                 $grade = (string)$testVariable->getValue();
 
-                /** @var ResultAliasServiceInterface $resultAliasService */
+                /** @var ResultAliasServiceInterface $resultAliasSerFvice */
                 $resultAliasService = $this->getServiceLocator()->get(ResultAliasServiceInterface::SERVICE_ID);
                 $deliveryResultAlias = $resultAliasService->getResultAlias($deliveryResultIdentifier);
                 $deliveryResultIdentifier = empty($deliveryResultAlias) ? $deliveryResultIdentifier : current($deliveryResultAlias);

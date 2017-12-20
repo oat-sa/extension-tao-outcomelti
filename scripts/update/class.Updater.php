@@ -49,10 +49,10 @@ class taoLtiBasicOutcome_scripts_update_Updater extends \common_ext_ExtensionUpd
         if ($this->isVersion('3.1.3')) {
             /** @var EventManager $evenManager */
             $evenManager = $this->getServiceManager()->get(EventManager::SERVICE_ID);
-            $evenManager->attach(\oat\taoQtiTest\models\event\LtiOutcomeReadyEvent::class,['taoLtiBasicOutcome_models_classes_LtiBasicOutcome','deferTransmit']);
+            $evenManager->attach(\oat\taoDelivery\models\classes\execution\event\DeliveryExecutionState::class,['taoLtiBasicOutcome_models_classes_LtiBasicOutcome','deferTransmit']);
             $this->getServiceManager()->register(EventManager::SERVICE_ID, $evenManager);
 
-//            $this->setVersion('3.2.0');
+            $this->setVersion('3.2.0');
         }
 
     }

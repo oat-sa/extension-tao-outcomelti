@@ -56,8 +56,8 @@ class SendLtiOutcomeTask extends AbstractAction
                 if (self::VARIABLE_IDENTIFIER == $variable->getIdentifier()) {
                     $this->sendLtiOutcome($variable, $deliveryResultIdentifier, $consumerKey, $serviceUrl);
                     $submitted++;
+                    break;
                 }
-                break;
             }
             if (0 === $submitted){
                 throw new \common_Exception('No LTI Outcome has been submitter for execution' . $deliveryResultIdentifier);

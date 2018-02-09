@@ -18,6 +18,7 @@
  *
  */
 
+use oat\taoLti\models\classes\LtiService;
 use oat\taoResultServer\models\classes\ResultAliasServiceInterface;
 
 /**
@@ -40,11 +41,14 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
 		parent::__construct();
         common_ext_ExtensionsManager::singleton()->getExtensionById("taoLtiBasicOutcome");
     }
+
     /**
-     * @param type $deliveryResultIdentifier lis_result_sourcedid
-     * @param type $test ignored
+     * @param $deliveryResultIdentifier lis_result_sourcedid
+     * @param $test ignored
      * @param taoResultServer_models_classes_Variable $testVariable
-     * @param type $callIdTest ignored
+     * @param $callIdTest ignored
+     * @throws \oat\taoLti\models\classes\LtiException
+     * @throws common_exception_Error
      */
     public function storeTestVariable($deliveryResultIdentifier, $test, taoResultServer_models_classes_Variable $testVariable, $callIdTest)
     {
@@ -68,7 +72,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
 
                 //common_Logger::i("Preparing POX message for the outcome service :".$message."\n");
 
-                $credentialResource = taoLti_models_classes_LtiService::singleton()->getCredential($this->consumerKey);
+                $credentialResource = LtiService::singleton()->getCredential($this->consumerKey);
                 //common_Logger::i("Credential for the consumerKey :". $credentialResource->getUri()."\n");
                 $credentials = new tao_models_classes_oauth_Credentials($credentialResource);
                 //$this->serviceUrl = "http://tao-dev/log.php";
@@ -158,4 +162,3 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome
         }
     }
 }
-?>

@@ -20,13 +20,13 @@
  */
 
 /**
- * 
+ *
  * @author Joel Bout <joel@taotesting.com>
  */
 class taoLtiBasicOutcome_scripts_update_Updater extends \common_ext_ExtensionUpdater {
 
 	/**
-     * 
+     *
      * @param string $currentVersion
      * @return string $versionUpdatedTo
      */
@@ -40,6 +40,6 @@ class taoLtiBasicOutcome_scripts_update_Updater extends \common_ext_ExtensionUpd
 
         $this->setVersion($currentVersion);
 
-        $this->skip('2.6.1', '3.1.8');
+        $this->skip('2.6.1', '3.2.0');
     }
 }

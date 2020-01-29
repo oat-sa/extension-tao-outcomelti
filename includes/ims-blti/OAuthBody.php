@@ -3,12 +3,13 @@
 require_once("OAuth.php");
 require_once("TrivialOAuthDataStore.php");
 
-function getLastOAuthBodyBaseString() {
+function getLastOAuthBodyBaseString()
+{
     global $LastOAuthBodyBaseString;
     return $LastOAuthBodyBaseString;
 }
 
-function getOAuthKeyFromHeaders() 
+function getOAuthKeyFromHeaders()
 {
     $request_headers = OAuthUtil::get_headers();
     // print_r($request_headers);
@@ -23,15 +24,17 @@ function getOAuthKeyFromHeaders()
     return false;
 }
  
-function handleOAuthBodyPOST($oauth_consumer_key, $oauth_consumer_secret) 
+function handleOAuthBodyPOST($oauth_consumer_key, $oauth_consumer_secret)
 {
     $request_headers = OAuthUtil::get_headers();
     // print_r($request_headers);
 
     // Must reject application/x-www-form-urlencoded
     $hdr = $request_headers['Content-type'];
-    if ( !isset($hdr) ) $hdr = $request_headers['Content-Type'];
-    if ($hdr == 'application/x-www-form-urlencoded' ) {
+    if (!isset($hdr)) {
+        $hdr = $request_headers['Content-Type'];
+    }
+    if ($hdr == 'application/x-www-form-urlencoded') {
         throw new Exception("OAuth request body signing must not use application/x-www-form-urlencoded");
     }
 
@@ -44,7 +47,7 @@ function handleOAuthBodyPOST($oauth_consumer_key, $oauth_consumer_secret)
         // echo("OBH=".$oauth_body_hash."\n");
     }
 
-    if ( ! isset($oauth_body_hash)  ) {
+    if (! isset($oauth_body_hash)) {
         throw new Exception("OAuth request body signing requires oauth_body_hash body");
     }
 
@@ -72,9 +75,9 @@ function handleOAuthBodyPOST($oauth_consumer_key, $oauth_consumer_secret)
     $postdata = file_get_contents('php://input');
     // echo($postdata);
 
-    $hash = base64_encode(sha1($postdata, TRUE));
+    $hash = base64_encode(sha1($postdata, true));
 
-    if ( $hash != $oauth_body_hash ) {
+    if ($hash != $oauth_body_hash) {
         throw new Exception("OAuth oauth_body_hash mismatch");
     }
 
@@ -83,13 +86,13 @@ function handleOAuthBodyPOST($oauth_consumer_key, $oauth_consumer_secret)
 
 function sendOAuthBodyPOST($method, $endpoint, $oauth_consumer_key, $oauth_consumer_secret, $content_type, $body)
 {
-    $hash = base64_encode(sha1($body, TRUE));
+    $hash = base64_encode(sha1($body, true));
 
-    $parms = array('oauth_body_hash' => $hash);
+    $parms = ['oauth_body_hash' => $hash];
 
     $test_token = '';
     $hmac_method = new OAuthSignatureMethod_HMAC_SHA1();
-    $test_consumer = new OAuthConsumer($oauth_consumer_key, $oauth_consumer_secret, NULL);
+    $test_consumer = new OAuthConsumer($oauth_consumer_key, $oauth_consumer_secret, null);
 
     $acc_req = OAuthRequest::from_consumer_and_token($test_consumer, $test_token, $method, $endpoint, $parms);
     $acc_req->sign_request($hmac_method, $test_consumer, $test_token);
@@ -102,11 +105,11 @@ function sendOAuthBodyPOST($method, $endpoint, $oauth_consumer_key, $oauth_consu
     $header = $acc_req->to_header();
     $header = $header . "\r\nContent-type: " . $content_type . "\r\n";
 
-    $params = array('http' => array(
+    $params = ['http' => [
         'method' => 'POST',
         'content' => $body,
         'header' => $header
-        ));
+        ]];
     try {
         $ctx = stream_context_create($params);
         $fp = @fopen($endpoint, 'rb', false, $ctx);
@@ -116,7 +119,7 @@ function sendOAuthBodyPOST($method, $endpoint, $oauth_consumer_key, $oauth_consu
     if ($fp) {
         $response = @stream_get_contents($fp);
     } else {  // Try CURL
-        $headers = explode("\r\n",$header);
+        $headers = explode("\r\n", $header);
         $response = sendXmlOverPost($endpoint, $body, $headers);
     }
 
@@ -126,27 +129,27 @@ function sendOAuthBodyPOST($method, $endpoint, $oauth_consumer_key, $oauth_consu
     return $response;
 }
 
-function sendXmlOverPost($url, $xml, $header) {
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $url);
+function sendXmlOverPost($url, $xml, $header)
+{
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
 
-  // For xml, change the content-type.
-  curl_setopt ($ch, CURLOPT_HTTPHEADER, $header);
+    // For xml, change the content-type.
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 
-  curl_setopt($ch, CURLOPT_POST, 1);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // ask for results to be returned
-/*
-  if(CurlHelper::checkHttpsURL($url)) { 
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // ask for results to be returned
+    /*
+    if(CurlHelper::checkHttpsURL($url)) {
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-  }
-*/
+    }
+    */
 
-  // Send to remote and return data to caller.
-  $result = curl_exec($ch);
-  curl_close($ch);
-  return $result;
+    // Send to remote and return data to caller.
+    $result = curl_exec($ch);
+    curl_close($ch);
+    return $result;
 }
-

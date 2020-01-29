@@ -23,19 +23,21 @@
  *
  * @author Joel Bout <joel@taotesting.com>
  */
-class taoLtiBasicOutcome_scripts_update_Updater extends \common_ext_ExtensionUpdater {
+class taoLtiBasicOutcome_scripts_update_Updater extends \common_ext_ExtensionUpdater
+{
 
-	/**
+    /**
      *
      * @param string $currentVersion
      * @return string $versionUpdatedTo
      */
-    public function update($initialVersion) {
+    public function update($initialVersion)
+    {
 
         $currentVersion = $initialVersion;
 
         if ($currentVersion == '2.6') {
-        	$currentVersion = '2.6.1';
+            $currentVersion = '2.6.1';
         }
 
         $this->setVersion($currentVersion);

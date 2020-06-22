@@ -22,6 +22,7 @@
 /**
  *
  * @author Joel Bout <joel@taotesting.com>
+ * @deprecated use migrations instead. See https://github.com/oat-sa/generis/wiki/Tao-Update-Process
  */
 class taoLtiBasicOutcome_scripts_update_Updater extends \common_ext_ExtensionUpdater
 {
@@ -43,5 +44,10 @@ class taoLtiBasicOutcome_scripts_update_Updater extends \common_ext_ExtensionUpd
         $this->setVersion($currentVersion);
 
         $this->skip('2.6.1', '3.3.1');
+        
+        //Updater files are deprecated. Please use migrations.
+        //See: https://github.com/oat-sa/generis/wiki/Tao-Update-Process
+
+        $this->setVersion($this->getExtension()->getManifest()->getVersion());
     }
 }

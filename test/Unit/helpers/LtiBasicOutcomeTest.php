@@ -41,7 +41,7 @@ class LtiBasicOutcomeTest extends TestCase
         $document->loadXML($result);
 
         $this->assertEquals(
-    'http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0',
+            'http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0',
             $document->getElementsByTagName('imsx_POXEnvelopeRequest')->item(0)->namespaceURI
         );
 

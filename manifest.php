@@ -26,7 +26,7 @@ return [
     'label' => 'Result storage for LTI',
     'description' => 'Implements the LTI basic outcome engine for LTI Result Server',
     'license' => 'GPL-2.0',
-    'version' => '3.4.3',
+    'version' => '3.4.2',
     'author' => 'Open Assessment Technologies',
     'requires' => [
         'taoResultServer' => '>=4.2.0',

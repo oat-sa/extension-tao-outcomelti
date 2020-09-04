@@ -19,6 +19,7 @@
  *
  */
 
+use oat\taoLti\models\classes\LtiOutcome\LtiOutcomeXmlFactory;
 use oat\taoLti\models\classes\LtiService;
 use oat\taoResultServer\models\classes\ResultAliasServiceInterface;
 
@@ -69,8 +70,13 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_class
                 $deliveryResultAlias = $resultAliasService->getResultAlias($deliveryResultIdentifier);
                 $deliveryResultIdentifier = empty($deliveryResultAlias) ? $deliveryResultIdentifier : current($deliveryResultAlias);
 
-                $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
-
+                $ltiOutcomeXmlFactory = $this->getLtiOutcomeXmlFactory();
+                $message = $ltiOutcomeXmlFactory->build(
+                    $deliveryResultIdentifier,
+                    $grade,
+                    uniqid('', true),
+                    'replaceResultRequest'
+                );
                 //common_Logger::i("Preparing POX message for the outcome service :".$message."\n");
 
                 $credentialResource = LtiService::singleton()->getCredential($this->consumerKey);
@@ -155,5 +161,10 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_class
         foreach ($itemVariables as $itemVariable) {
             $this->storeItemVariable($deliveryResultIdentifier, $test, $item, $itemVariable, $callIdItem);
         }
+    }
+
+    private function getLtiOutcomeXmlFactory(): LtiOutcomeXmlFactory
+    {
+        $this->getServiceLocator()->get(LtiOutcomeXmlFactory::class);
     }
 }

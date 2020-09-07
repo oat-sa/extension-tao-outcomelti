@@ -71,18 +71,15 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_class
                 $deliveryResultIdentifier = empty($deliveryResultAlias) ? $deliveryResultIdentifier : current($deliveryResultAlias);
 
                 $ltiOutcomeXmlFactory = $this->getLtiOutcomeXmlFactory();
-                $message = $ltiOutcomeXmlFactory->build(
+                $message = $ltiOutcomeXmlFactory->buildReplaceResultRequest(
                     $deliveryResultIdentifier,
                     $grade,
                     uniqid('', true),
                     'replaceResultRequest'
                 );
-                //common_Logger::i("Preparing POX message for the outcome service :".$message."\n");
 
                 $credentialResource = LtiService::singleton()->getCredential($this->consumerKey);
-                //common_Logger::i("Credential for the consumerKey :". $credentialResource->getUri()."\n");
                 $credentials = new tao_models_classes_oauth_Credentials($credentialResource);
-                //$this->serviceUrl = "http://tao-dev/log.php";
                 //Building POX raw http message
                 $unSignedOutComeRequest = new common_http_Request($this->serviceUrl, 'POST', []);
                 $unSignedOutComeRequest->setBody($message);

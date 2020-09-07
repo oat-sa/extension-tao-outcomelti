@@ -74,8 +74,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_class
                 $message = $ltiOutcomeXmlFactory->buildReplaceResultRequest(
                     $deliveryResultIdentifier,
                     $grade,
-                    uniqid('', true),
-                    'replaceResultRequest'
+                    uniqid('', true)
                 );
 
                 $credentialResource = LtiService::singleton()->getCredential($this->consumerKey);

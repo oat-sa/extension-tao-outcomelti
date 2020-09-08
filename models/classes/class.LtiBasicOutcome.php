@@ -161,6 +161,6 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_class
 
     private function getLtiOutcomeXmlFactory(): LtiOutcomeXmlFactory
     {
-        $this->getServiceLocator()->get(LtiOutcomeXmlFactory::class);
+       return $this->getServiceLocator()->get(LtiOutcomeXmlFactory::class);
     }
 }

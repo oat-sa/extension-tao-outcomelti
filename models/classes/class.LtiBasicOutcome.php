@@ -19,6 +19,7 @@
  *
  */
 
+use oat\taoLti\models\classes\LtiOutcome\LtiOutcomeXmlFactory;
 use oat\taoLti\models\classes\LtiService;
 use oat\taoResultServer\models\classes\ResultAliasServiceInterface;
 
@@ -69,14 +70,15 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_class
                 $deliveryResultAlias = $resultAliasService->getResultAlias($deliveryResultIdentifier);
                 $deliveryResultIdentifier = empty($deliveryResultAlias) ? $deliveryResultIdentifier : current($deliveryResultAlias);
 
-                $message = taoLtiBasicOutcome_helpers_LtiBasicOutcome::buildXMLMessage($deliveryResultIdentifier, $grade, 'replaceResultRequest');
-
-                //common_Logger::i("Preparing POX message for the outcome service :".$message."\n");
+                $ltiOutcomeXmlFactory = $this->getLtiOutcomeXmlFactory();
+                $message = $ltiOutcomeXmlFactory->buildReplaceResultRequest(
+                    $deliveryResultIdentifier,
+                    $grade,
+                    uniqid('', true)
+                );
 
                 $credentialResource = LtiService::singleton()->getCredential($this->consumerKey);
-                //common_Logger::i("Credential for the consumerKey :". $credentialResource->getUri()."\n");
                 $credentials = new tao_models_classes_oauth_Credentials($credentialResource);
-                //$this->serviceUrl = "http://tao-dev/log.php";
                 //Building POX raw http message
                 $unSignedOutComeRequest = new common_http_Request($this->serviceUrl, 'POST', []);
                 $unSignedOutComeRequest->setBody($message);
@@ -155,5 +157,10 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_class
         foreach ($itemVariables as $itemVariable) {
             $this->storeItemVariable($deliveryResultIdentifier, $test, $item, $itemVariable, $callIdItem);
         }
+    }
+
+    private function getLtiOutcomeXmlFactory(): LtiOutcomeXmlFactory
+    {
+       return $this->getServiceLocator()->get(LtiOutcomeXmlFactory::class);
     }
 }

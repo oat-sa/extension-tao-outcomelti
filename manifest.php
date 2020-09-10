@@ -30,7 +30,7 @@ return [
     'author' => 'Open Assessment Technologies',
     'requires' => [
         'taoResultServer' => '>=4.2.0',
-        'taoLti' => '>=5.0.0',
+        'taoLti' => '>=11.12.0',
     ],
     'models' => [
         'http://www.tao.lu/Ontologies/taoLtiBasicOutcome.rdf#',

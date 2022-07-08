@@ -80,16 +80,16 @@ class BLTI
             $sql = 'SELECT * FROM ' . $parm['table'] . ' WHERE ' .
                 ($parm['key_column'] ? $parm['key_column'] : 'oauth_consumer_key') .
                 '=' .
-                "'" . mysql_real_escape_string($oauth_consumer_key) . "'";
-            $result = mysql_query($sql);
-            $num_rows = mysql_num_rows($result);
+                "'" . mysqli_real_escape_string($oauth_consumer_key) . "'";
+            $result = mysqli_query($sql);
+            $num_rows = mysqli_num_rows($result);
             if ($num_rows != 1) {
                 $this->message = "Your consumer is not authorized oauth_consumer_key=" . $oauth_consumer_key;
                 return;
             } else {
-                while ($row = mysql_fetch_assoc($result)) {
-                    $secret = $row[$parms['secret_column'] ? $parms['secret_column'] : 'secret'];
-                    $context_id = $row[$parms['context_column'] ? $parms['context_column'] : 'context_id'];
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $secret = $row[$parm['secret_column'] ? $parm['secret_column'] : 'secret'];
+                    $context_id = $row[$parm['context_column'] ? $parm['context_column'] : 'context_id'];
                     if ($context_id) {
                         $this->context_id = $context_id;
                     }
@@ -112,7 +112,7 @@ class BLTI
         $method = new OAuthSignatureMethod_HMAC_SHA1();
         $server->add_signature_method($method);
         $request = OAuthRequest::from_request();
-        
+
         $this->basestring = $request->get_signature_base_string();
 
         try {
@@ -215,7 +215,7 @@ class BLTI
         }
         return $this->getUserName();
     }
-  
+
     function getUserName()
     {
         $givenname = $this->info['lis_person_name_given'];

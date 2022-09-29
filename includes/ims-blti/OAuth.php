@@ -836,7 +836,7 @@ class OAuthUtil
 
         $parsed_parameters = [];
         foreach ($pairs as $pair) {
-            $split = preg_split('/=/', $pair, 2);
+            $split = explode('=', $pair, 2);
             $parameter = OAuthUtil::urldecode_rfc3986($split[0]);
             $value = isset($split[1]) ? OAuthUtil::urldecode_rfc3986($split[1]) : '';
 

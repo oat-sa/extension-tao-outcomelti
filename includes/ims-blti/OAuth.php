@@ -299,7 +299,7 @@ class OAuthRequest
             $qparms = OAuthUtil::parse_parameters($parts['query']);
             $parameters = array_merge($qparms, $parameters);
         }
-     
+
 
         return new OAuthRequest($http_method, $http_url, $parameters);
     }
@@ -832,11 +832,11 @@ class OAuthUtil
             return [];
         }
 
-        $pairs = split('&', $input);
+        $pairs = explode('&', $input);
 
         $parsed_parameters = [];
         foreach ($pairs as $pair) {
-            $split = split('=', $pair, 2);
+            $split = explode('=', $pair, 2);
             $parameter = OAuthUtil::urldecode_rfc3986($split[0]);
             $value = isset($split[1]) ? OAuthUtil::urldecode_rfc3986($split[1]) : '';
 

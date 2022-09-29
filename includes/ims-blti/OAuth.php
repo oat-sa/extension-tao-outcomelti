@@ -832,7 +832,7 @@ class OAuthUtil
             return [];
         }
 
-        $pairs = preg_split('/&/', $input);
+        $pairs = explode('&', $input);
 
         $parsed_parameters = [];
         foreach ($pairs as $pair) {

@@ -30,8 +30,7 @@ use oat\taoResultServer\models\classes\ResultAliasServiceInterface;
 
 class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_classes_GenerisService implements taoResultServer_models_classes_WritableResultStorage
 {
-
-    const VARIABLE_IDENTIFIER = 'LtiOutcome';
+    public const VARIABLE_IDENTIFIER = 'LtiOutcome';
 
     //private $ltiConsumer;//the kb resource modelling the LTI consumer
     /**
@@ -87,7 +86,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_class
                 common_Logger::d("Request sent (Body)\n" . ($signedRequest->getBody()) . "\n");
                 common_Logger::d("Request sent (Headers)\n" . (serialize($signedRequest->getHeaders())) . "\n");
                 common_Logger::d("Request sent (Headers)\n" . (serialize($signedRequest->getParams())) . "\n");
-                 //Hack for moodle comaptibility, the header is ignored for the signature computation
+                //Hack for moodle comaptibility, the header is ignored for the signature computation
                 $signedRequest->setHeader("Content-Type", "application/xml");
 
                 $response = $signedRequest->send();
@@ -100,14 +99,14 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_class
             }
         }
     }
-    
+
     public function storeTestVariables($deliveryResultIdentifier, $test, array $testVariables, $callIdTest)
     {
         foreach ($testVariables as $testVariable) {
             $this->storeTestVariable($deliveryResultIdentifier, $test, $testVariable, $callIdTest);
         }
     }
-    
+
     /*
     * retrieve specific parameters from the resultserver to configure the storage
     */
@@ -117,7 +116,7 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_class
         /**
          * Retrieve the lti consumer associated with the result server in the KB , those rpoperties are available within taoLtiBasicComponent only
          */
-       
+
         if (isset($callOptions["service_url"])) {
             $this->serviceUrl =  $callOptions["service_url"];
         } else {
@@ -161,6 +160,6 @@ class taoLtiBasicOutcome_models_classes_LtiBasicOutcome extends tao_models_class
 
     private function getLtiOutcomeXmlFactory(): LtiOutcomeXmlFactory
     {
-       return $this->getServiceLocator()->get(LtiOutcomeXmlFactory::class);
+        return $this->getServiceLocator()->get(LtiOutcomeXmlFactory::class);
     }
 }

@@ -23,7 +23,7 @@ function getOAuthKeyFromHeaders()
     }
     return false;
 }
- 
+
 function handleOAuthBodyPOST($oauth_consumer_key, $oauth_consumer_secret)
 {
     $request_headers = OAuthUtil::get_headers();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,7 +27,6 @@
  */
 class taoLtiBasicOutcome_scripts_update_Updater extends \common_ext_ExtensionUpdater
 {
-
     /**
      *
      * @param string $currentVersion
@@ -44,7 +44,7 @@ class taoLtiBasicOutcome_scripts_update_Updater extends \common_ext_ExtensionUpd
         $this->setVersion($currentVersion);
 
         $this->skip('2.6.1', '3.3.1');
-        
+
         //Updater files are deprecated. Please use migrations.
         //See: https://github.com/oat-sa/generis/wiki/Tao-Update-Process
 

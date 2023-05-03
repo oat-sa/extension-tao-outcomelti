@@ -2,7 +2,7 @@
 
 require_once 'OAuth.php';
 
-  // Replace this with some real function that pulls from the LMS.
+// Replace this with some real function that pulls from the LMS.
 function getLMSDummyData()
 {
     $parms = [
@@ -39,7 +39,7 @@ function validateDescriptor($descriptor)
     return $launch_url;
 }
 
-  // Parse a descriptor
+// Parse a descriptor
 function launchInfo($xmldata)
 {
     $xml = new SimpleXMLElement($xmldata);
@@ -264,7 +264,7 @@ function do_post_request($url, $data, $optional_headers = null)
               'method' => 'POST',
               'content' => $data
             ]];
-    
+
     if ($optional_headers !== null) {
         $header = $optional_headers . "\r\n";
     }

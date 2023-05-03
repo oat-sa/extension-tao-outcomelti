@@ -20,7 +20,6 @@ function is_basic_lti_request()
 // functions
 class BLTI
 {
-
     public $valid = false;
     public $complete = false;
     public $message = false;
@@ -29,7 +28,7 @@ class BLTI
     public $row = false;
     public $context_id = false;  // Override context_id
 
-    function __construct($parm = false, $usesession = true, $doredirect = true)
+    public function __construct($parm = false, $usesession = true, $doredirect = true)
     {
 
         // If this request is not an LTI Launch, either
@@ -141,9 +140,9 @@ class BLTI
 
         $this->info = $newinfo;
         if ($usesession == true and strlen(session_id()) > 0) {
-             $_SESSION['_basic_lti_context'] = $this->info;
-             unset($_SESSION['_basiclti_lti_row']);
-             unset($_SESSION['_basiclti_lti_context_id']);
+            $_SESSION['_basic_lti_context'] = $this->info;
+            unset($_SESSION['_basiclti_lti_row']);
+            unset($_SESSION['_basiclti_lti_context_id']);
             if ($this->row) {
                 $_SESSION['_basiclti_lti_row'] = $this->row;
             }
@@ -158,7 +157,7 @@ class BLTI
         }
     }
 
-    function addSession($location)
+    public function addSession($location)
     {
         if (ini_get('session.use_cookies') == 0) {
             if (strpos($location, '?') > 0) {
@@ -171,20 +170,20 @@ class BLTI
         return $location;
     }
 
-    function isInstructor()
+    public function isInstructor()
     {
         $roles = $this->info['roles'];
         $roles = strtolower($roles);
-        if (! ( strpos($roles, "instructor") === false )) {
+        if (! (strpos($roles, "instructor") === false)) {
             return true;
         }
-        if (! ( strpos($roles, "administrator") === false )) {
+        if (! (strpos($roles, "administrator") === false)) {
             return true;
         }
         return false;
     }
 
-    function getUserEmail()
+    public function getUserEmail()
     {
         $email = $this->info['lis_person_contact_email_primary'];
         if (strlen($email) > 0) {
@@ -198,7 +197,7 @@ class BLTI
         return false;
     }
 
-    function getUserShortName()
+    public function getUserShortName()
     {
         $email = $this->getUserEmail();
         $givenname = $this->info['lis_person_name_given'];
@@ -216,7 +215,7 @@ class BLTI
         return $this->getUserName();
     }
 
-    function getUserName()
+    public function getUserName()
     {
         $givenname = $this->info['lis_person_name_given'];
         $familyname = $this->info['lis_person_name_family'];
@@ -236,7 +235,7 @@ class BLTI
         return $this->getUserEmail();
     }
 
-    function getUserKey()
+    public function getUserKey()
     {
         $oauth = $this->info['oauth_consumer_key'];
         $id = $this->info['user_id'];
@@ -246,7 +245,7 @@ class BLTI
         return false;
     }
 
-    function getUserImage()
+    public function getUserImage()
     {
         $image = $this->info['user_image'];
         if (strlen($image) > 0) {
@@ -262,7 +261,7 @@ class BLTI
         return $grav_url;
     }
 
-    function getResourceKey()
+    public function getResourceKey()
     {
         $oauth = $this->info['oauth_consumer_key'];
         $id = $this->info['resource_link_id'];
@@ -272,7 +271,7 @@ class BLTI
         return false;
     }
 
-    function getResourceTitle()
+    public function getResourceTitle()
     {
         $title = $this->info['resource_link_title'];
         if (strlen($title) > 0) {
@@ -281,13 +280,13 @@ class BLTI
         return false;
     }
 
-    function getConsumerKey()
+    public function getConsumerKey()
     {
         $oauth = $this->info['oauth_consumer_key'];
         return $oauth;
     }
 
-    function getCourseKey()
+    public function getCourseKey()
     {
         if ($this->context_id) {
             return $this->context_id;
@@ -300,7 +299,7 @@ class BLTI
         return false;
     }
 
-    function getCourseName()
+    public function getCourseName()
     {
         $label = $this->info['context_label'];
         $title = $this->info['context_title'];
@@ -318,17 +317,17 @@ class BLTI
     }
 
     // TODO: Add javasript version if headers are already sent
-    function redirect()
+    public function redirect()
     {
-            $host = $_SERVER['HTTP_HOST'];
-            $uri = $_SERVER['PHP_SELF'];
-            $location = $_SERVER['HTTPS'] ? 'https://' : 'http://';
-            $location = $location . $host . $uri;
-            $location = $this->addSession($location);
-            header("Location: $location");
+        $host = $_SERVER['HTTP_HOST'];
+        $uri = $_SERVER['PHP_SELF'];
+        $location = $_SERVER['HTTPS'] ? 'https://' : 'http://';
+        $location = $location . $host . $uri;
+        $location = $this->addSession($location);
+        header("Location: $location");
     }
 
-    function dump()
+    public function dump()
     {
         if (! $this->valid or $this->info == false) {
             return "Context not valid\n";

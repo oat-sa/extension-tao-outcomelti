@@ -1,14 +1,16 @@
 <?php
 
+// phpcs:disable PSR1.Files.SideEffects
 require_once 'OAuth.php';
 
-  // Replace this with some real function that pulls from the LMS.
+// Replace this with some real function that pulls from the LMS.
 function getLMSDummyData()
 {
     $parms = [
     "resource_link_id" => "120988f929-274612",
     "resource_link_title" => "Weekly Blog",
-    "resource_link_description" => "Each student needs to reflect on the weekly reading.  These should be one paragraph long.",
+    "resource_link_description" => "Each student needs to reflect on the weekly reading.  These should be one "
+        . "paragraph long.",
     "user_id" => "292832126",
     "roles" => "Instructor",  // or Learner
     "lis_person_name_full" => 'Jane Q. Public',
@@ -39,7 +41,7 @@ function validateDescriptor($descriptor)
     return $launch_url;
 }
 
-  // Parse a descriptor
+// Parse a descriptor
 function launchInfo($xmldata)
 {
     $xml = new SimpleXMLElement($xmldata);
@@ -181,9 +183,11 @@ function postLaunchHTML($newparms, $endpoint, $debug = false, $iframeattr = fals
     global $last_base_string;
     $r = "<div id=\"ltiLaunchFormSubmitArea\">\n";
     if ($iframeattr) {
-        $r = "<form action=\"" . $endpoint . "\" name=\"ltiLaunchForm\" id=\"ltiLaunchForm\" method=\"post\" target=\"basicltiLaunchFrame\" encType=\"application/x-www-form-urlencoded\">\n" ;
+        $r = "<form action=\"" . $endpoint . "\" name=\"ltiLaunchForm\" id=\"ltiLaunchForm\" method=\"post\" "
+            . "target=\"basicltiLaunchFrame\" encType=\"application/x-www-form-urlencoded\">\n" ;
     } else {
-        $r = "<form action=\"" . $endpoint . "\" name=\"ltiLaunchForm\" id=\"ltiLaunchForm\" method=\"post\" encType=\"application/x-www-form-urlencoded\">\n" ;
+        $r = "<form action=\"" . $endpoint . "\" name=\"ltiLaunchForm\" id=\"ltiLaunchForm\" method=\"post\" "
+            . "encType=\"application/x-www-form-urlencoded\">\n" ;
     }
     $submit_text = $newparms['ext_submit'];
     foreach ($newparms as $key => $value) {
@@ -225,7 +229,8 @@ function postLaunchHTML($newparms, $endpoint, $debug = false, $iframeattr = fals
             $r .= "$key = $value<br/>\n";
         }
         $r .= "&nbsp;<br/>\n";
-        $r .= "<p><b>" . get_string("basiclti_base_string", "basiclti") . "</b><br/>\n" . $last_base_string . "</p>\n";
+        $r .= "<p><b>" . get_string("basiclti_base_string", "basiclti") . "</b><br/>\n" . $last_base_string
+            . "</p>\n";
         $r .= "</div>\n";
     }
     $r .= "</form>\n";
@@ -264,7 +269,7 @@ function do_post_request($url, $data, $optional_headers = null)
               'method' => 'POST',
               'content' => $data
             ]];
-    
+
     if ($optional_headers !== null) {
         $header = $optional_headers . "\r\n";
     }

@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:disable PSR1.Files.SideEffects
 require_once("OAuth.php");
 require_once("TrivialOAuthDataStore.php");
 

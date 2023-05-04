@@ -2,6 +2,8 @@
 
 /**
  * A Trivial memory-based store - no support for tokens
+ *
+ * phpcs:disable PSR1.Methods.CamelCapsMethodName
  */
 class TrivialOAuthDataStore extends OAuthDataStore
 {

@@ -1,7 +1,8 @@
 <?php
 
 // vim: foldmethod=marker
-
+// phpcs:disable PSR1.Files.SideEffects
+// phpcs:disable PSR1.Methods.CamelCapsMethodName
 $OAuth_last_computed_signature = false;
 
 

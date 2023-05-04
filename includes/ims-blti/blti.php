@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:disable PSR1.Files.SideEffects
 require_once 'OAuth.php';
 require_once 'TrivialOAuthDataStore.php';
 
@@ -15,6 +16,7 @@ function is_basic_lti_request()
     }
     return false;
 }
+// phpcs:enable PSR1.Files.SideEffects
 
 // Basic LTI Class that does the setup and provides utility
 // functions

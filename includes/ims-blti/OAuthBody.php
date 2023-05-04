@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:disable PSR1.Files.SideEffects
 require_once("OAuth.php");
 require_once("TrivialOAuthDataStore.php");
 
@@ -23,7 +24,7 @@ function getOAuthKeyFromHeaders()
     }
     return false;
 }
- 
+
 function handleOAuthBodyPOST($oauth_consumer_key, $oauth_consumer_secret)
 {
     $request_headers = OAuthUtil::get_headers();
